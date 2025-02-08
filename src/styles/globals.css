@@ -1,16 +1,39 @@
 @import url('../../node_modules/normalize.css/normalize.css');
 
 :root {
-  font-family: "Poppins", serif;
+  font-family: "Open Sans", serif;
   font-weight: 400;
   font-style: normal;
   font-size: 20px;
-  line-height: 1.8;
+  line-height: 1.6;
   color: #fff;
   background-color: #121829;
-
+  font-variation-settings:
+  "wdth" 100;
+  font-optical-sizing: auto;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2 {
+  font-weight: 600;
+  letter-spacing: -2%;
+  margin: 0;
+}
+
+h1 {
+  font-size: 64px;
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 48px;
+  line-height: calc(7 / 6);
+}
+
+p {
+  margin: 0;
+  color: #8E95A9;
 }
