@@ -23,7 +23,7 @@ export default tseslint.config(
       'semi': ['error', 'always', { 'omitLastInOneLineBlock': false}],
       'comma-dangle': ['error', 'never'],
       quotes: ['error', 'single'],
-      'indent': ['error', 'tab']
+      'indent': ['error', 2]
     },
   },
 )

@@ -6,9 +6,9 @@ interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement
 }
 
 export function Button({ text }: Props) {
-	return (
-		<button className={styles.button}>
-			{ text }
-		</button>
-	);
+  return (
+    <button className={styles.button}>
+      { text }
+    </button>
+  );
 }
