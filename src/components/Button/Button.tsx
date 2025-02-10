@@ -1,13 +1,14 @@
-import { DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
+import { DetailedHTMLProps, ButtonHTMLAttributes, MouseEventHandler } from 'react';
 import styles from './Button.module.css';
 
 interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  text: string
+  text: string,
+  onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-export function Button({ text }: Props) {
+export function Button({ text, onClick, ...props }: Props) {
   return (
-    <button className={styles.button}>
+    <button className={styles.button} onClick={onClick} {...props}>
       { text }
     </button>
   );

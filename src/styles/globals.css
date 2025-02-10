@@ -1,13 +1,16 @@
 @import url('../../node_modules/normalize.css/normalize.css');
 
 :root {
+  --fontColor: #fff;
+  --accentColor: #7B6EF6;
+  --backgroundColor: #121829;
+
   font-family: "Open Sans", serif;
   font-weight: 400;
   font-style: normal;
   font-size: 20px;
   line-height: 1.6;
-  color: #fff;
-  background-color: #121829;
+  accent-color: var(--accentColor);
   font-variation-settings:
   "wdth" 100;
   font-optical-sizing: auto;
@@ -15,6 +18,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--fontColor);
+  background-color: var(--backgroundColor);
+  background-image: url('../assets/images/background.png');
+  background-size: cover;
+  min-height: 100vh;
 }
 
 h1, h2 {
@@ -33,7 +44,23 @@ h2 {
   line-height: calc(7 / 6);
 }
 
+a {
+  text-decoration: none;
+}
+
 p {
   margin: 0;
   color: #8E95A9;
+}
+
+input {
+  color: var(--fontColor);
+  
+  &:focus {
+    outline: 1px solid var(--accentColor);;
+  }
+
+  &::placeholder {
+    color: #475069;
+  }
 }

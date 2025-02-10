@@ -1,0 +1,20 @@
+.header {
+  padding: 16px 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: rgb(18 24 41 / 80%);
+
+  & a {
+    color: #A8AEBF;
+    letter-spacing: 2%;
+
+    &.active {
+      color: #fff !important;
+    }
+  }
+}
+
+
