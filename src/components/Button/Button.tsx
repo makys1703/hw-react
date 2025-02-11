@@ -3,12 +3,12 @@ import styles from './Button.module.css';
 
 interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   text: string,
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-export function Button({ text, onClick, ...props }: Props) {
+export function Button({ text, ...props }: Props) {
   return (
-    <button className={styles.button} onClick={onClick} {...props}>
+    <button className={styles.button} {...props}>
       { text }
     </button>
   );

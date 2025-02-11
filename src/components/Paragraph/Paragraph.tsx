@@ -6,5 +6,9 @@ interface Props extends PropsWithChildren, DetailedHTMLProps<HTMLAttributes<HTML
 }
 
 export function Paragraph({ children, variant = 'normal', ...props}: Props) {
-  return <p className={styles[variant]} {...props}>{ children }</p>;
+  return (
+    <p className={styles[variant]} {...props}>
+      { children }
+    </p>
+  );
 }

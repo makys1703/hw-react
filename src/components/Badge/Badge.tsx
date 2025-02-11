@@ -3,5 +3,7 @@ import styles from './Badge.module.css';
 
 
 export function Badge({ children }: PropsWithChildren) {
-  return <div className={styles.badge}>{ children }</div>;
+  return (
+    <div className={styles.badge}>{ children }</div>
+  );
 }
