@@ -1,9 +1,9 @@
-import { MainLayout } from '../layouts/MainLayout';
-import { PageHeading } from '../modules/PageHeading';
+import { MainLayout } from '../../layouts/MainLayout';
+import { PageHeading } from '../../modules/PageHeading';
 import { SearchForm } from './modules/SearchForm';
-import { FilmList } from '../modules/FilmList';
-import { Paragraph } from '../components/Paragraph';
-import { filmsData } from '../store/films';
+import { FilmList } from '../../modules/FilmList';
+import { Paragraph } from '../../components/Paragraph';
+import { filmsData } from '../../store/films';
 
 
 export function MainPage() {

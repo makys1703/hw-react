@@ -1,9 +1,9 @@
 import { useState, useRef, FormEventHandler, ChangeEventHandler } from 'react';
-import { Form } from '../../../components/Form';
-import { InputGroup } from '../../../components/InputGroup';
-import { Input } from '../../../components/Input';
-import { Button } from '../../../components/Button';
-import searchIcon from '../../../assets/icons/search.svg';
+import { Form } from '../../../../components/Form';
+import { InputGroup } from '../../../../components/InputGroup';
+import { Input } from '../../../../components/Input';
+import { Button } from '../../../../components/Button';
+import searchIcon from '../../../../assets/icons/search.svg';
 
 
 const searchIconSize = 24;
