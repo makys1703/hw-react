@@ -1,0 +1,8 @@
+.favoriteButton {
+  display: flex;
+  column-gap: 8px;
+  color: #7B6EF6;
+  line-height: 1.5;
+  background: transparent;
+  border: none;
+}

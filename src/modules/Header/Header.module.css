@@ -1,11 +1,9 @@
 .header {
-  padding: 16px 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding-block: 16px;
   font-size: 16px;
   font-weight: 600;
   background-color: rgb(18 24 41 / 80%);
+  backdrop-filter: blur(40px);
 
   & a {
     color: #A8AEBF;
@@ -15,6 +13,12 @@
       color: #fff !important;
     }
   }
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 

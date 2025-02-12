@@ -44,6 +44,12 @@ h2 {
   line-height: calc(7 / 6);
 }
 
+h5 {
+  font-size: 16px;
+  line-height: inherit;
+  margin: 0px 0px 16px 0px;
+}
+
 a {
   text-decoration: none;
 }
@@ -63,4 +69,8 @@ input {
   &::placeholder {
     color: #475069;
   }
+}
+
+button {
+  cursor: pointer;
 }

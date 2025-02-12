@@ -1,0 +1,16 @@
+.cardRating {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #FFAD49;
+  padding-block: 4px;
+  padding-inline: 8px;
+  background-color: rgb(0 0 0 / 65%);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+}

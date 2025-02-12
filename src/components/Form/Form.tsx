@@ -1,21 +1,22 @@
 import classNames from 'classnames';
-import { FormEventHandler, PropsWithChildren } from 'react';
+import { PropsWithChildren, DetailedHTMLProps, FormHTMLAttributes} from 'react';
 import styles from './Form.module.css';
 
 
-interface Props extends PropsWithChildren {
-  onSubmit: FormEventHandler<HTMLFormElement>
+interface Props extends 
+  PropsWithChildren, 
+  DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   direction?: 'column' | 'row'
 }
 
-export function Form({ children, onSubmit, direction = 'column' }: Props) {
+export function Form({ children, direction = 'column', ...props }: Props) {
   const formClasses = classNames({
     [styles.form]: true,
     [styles.rowDirection]: direction === 'row'
   });
 
   return (
-    <form className={formClasses} onSubmit={onSubmit}>
+    <form className={formClasses} {...props}>
       { children }
     </form>
   );
