@@ -10,7 +10,7 @@ export function MainPage() {
   return (
     <MainLayout>
       <PageHeading title='Поиск'>
-        <Paragraph variant="small">
+        <Paragraph variant='small'>
           Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.
         </Paragraph>
       </PageHeading>

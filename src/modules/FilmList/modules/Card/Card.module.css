@@ -6,3 +6,9 @@
   border-radius: 12px;
   cursor: pointer;
 }
+
+.cardBadge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}

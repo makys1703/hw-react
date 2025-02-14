@@ -1,14 +1,16 @@
-import { DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
+import { PropsWithChildren, DetailedHTMLProps, ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.css';
 
-interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  text: string,
+interface Props extends
+  PropsWithChildren,
+  DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  variant?: 'solid' | 'transparent'
 }
 
-export function Button({ text, ...props }: Props) {
+export function Button({ children, variant = 'solid', ...props }: Props) {
   return (
-    <button className={styles.button} {...props}>
-      { text }
+    <button {...props} className={styles[variant]}>
+      { children }
     </button>
   );
 }

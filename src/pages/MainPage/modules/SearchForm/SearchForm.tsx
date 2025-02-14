@@ -37,22 +37,20 @@ export function SearchForm() {
   };
 
   return (
-    <Form direction="row" onSubmit={onSubmit}>
+    <Form direction='row' onSubmit={onSubmit}>
       <InputGroup>
         <img src={searchIcon} width={searchIconSize} height={searchIconSize} />
         <Input
-          name="name"
-          placeholder="Введите название"
+          name='name'
+          placeholder='Введите название'
           ref={inputRef}
           onFocus={onFocus}
           onChange={onChange}
         />
       </InputGroup>
-      <Button
-        type="submit"
-        text="Найти"
-        disabled={touched && !valid}
-      />
+      <Button type='submit' disabled={touched && !valid}>
+        Найти
+      </Button>
     </Form>
   );
 }

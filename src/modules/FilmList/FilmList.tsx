@@ -1,4 +1,4 @@
-import { Card } from './components/Card';
+import { Card } from './modules/Card';
 import { Film } from '../../types/film';
 import styles from './FilmList.module.css';
 

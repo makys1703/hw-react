@@ -1,9 +1,19 @@
 import { PropsWithChildren } from 'react';
+import classNames from 'classnames';
 import styles from './Badge.module.css';
 
 
-export function Badge({ children }: PropsWithChildren) {
+interface Props extends PropsWithChildren {
+  variant?: 'default' | 'circle',
+  className?: string
+}
+
+export function Badge({ children, className: propsClasses, variant = 'default'}: Props) {
+  const badgeClasses = classNames(styles.badge, styles[variant], propsClasses);
+
   return (
-    <div className={styles.badge}>{ children }</div>
+    <div className={badgeClasses}>
+      { children }
+    </div>
   );
 }
