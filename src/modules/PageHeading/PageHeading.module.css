@@ -1,0 +1,8 @@
+.pageHeading {
+  width: min(588px, 100%);
+}
+
+.text {
+  padding-top: 16px;
+  padding-bottom: 24px;
+}

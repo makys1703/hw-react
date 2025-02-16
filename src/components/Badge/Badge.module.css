@@ -1,0 +1,30 @@
+.badge {
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+}
+
+.circle {
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 2%;
+  border-radius: 50%;
+  background: var(--accentColor);
+  cursor: pointer;
+}
+
+.default {
+  padding-block: 4px;
+  padding-inline: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #FFAD49;
+  background-color: rgb(0 0 0 / 65%);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+}
+

@@ -1,8 +1,5 @@
-function App() {
-  return (
-    <>
-    </>
-  )
-}
+import { MainPage } from './pages/MainPage';
 
-export default App
+export function App() {
+  return <MainPage />;
+}
