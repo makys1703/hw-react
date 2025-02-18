@@ -1,4 +1,4 @@
-import { Film } from '../types/film';
+import { Film } from '../types/film.interface';
 
 export const filmsData: Film[] = [
   {

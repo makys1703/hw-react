@@ -51,6 +51,7 @@ h5 {
 }
 
 a {
+  color: var(--fontColor);
   text-decoration: none;
 }
 
@@ -69,6 +70,10 @@ input {
   &::placeholder {
     color: #475069;
   }
+}
+
+label {
+  width: 100%;
 }
 
 button {

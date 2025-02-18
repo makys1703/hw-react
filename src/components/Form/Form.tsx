@@ -16,7 +16,7 @@ export function Form({ children, direction = 'column', ...props }: Props) {
   });
 
   return (
-    <form className={formClasses} {...props}>
+    <form {...props} className={formClasses}>
       { children }
     </form>
   );

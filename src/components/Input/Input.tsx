@@ -4,6 +4,8 @@ type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputE
 
 export function Input(props: Props) {
   return (
-    <input type='text' {...props} />
+    <label>
+      <input type='text' {...props} />
+    </label>
   );
 }
