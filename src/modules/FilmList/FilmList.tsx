@@ -1,5 +1,5 @@
 import { Card } from './modules/Card';
-import { Film } from '../../types/film';
+import { Film } from '../../types/film.interface';
 import styles from './FilmList.module.css';
 
 

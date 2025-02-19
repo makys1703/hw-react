@@ -2,17 +2,10 @@
   padding-block: 16px;
   font-size: 16px;
   font-weight: 600;
+  color: #A8AEBF;
+  letter-spacing: 2%;
   background-color: rgb(18 24 41 / 80%);
   backdrop-filter: blur(40px);
-
-  & a {
-    color: #A8AEBF;
-    letter-spacing: 2%;
-
-    &.active {
-      color: #fff !important;
-    }
-  }
 }
 
 .headerWrapper {
@@ -20,5 +13,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-
