@@ -2,7 +2,6 @@ import { useRef, useState, useContext, ChangeEventHandler, FormEventHandler } fr
 import { useLocalStorage } from '../../../../hooks/useLocalStorage.hook';
 import { UserContext, UserContextData } from './../../../../context/User/user.context';
 import { Form } from '../../../../components/Form';
-import { InputGroup } from '../../../../components/InputGroup';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
 import { User } from '../../../../types/user.interface';
@@ -53,9 +52,7 @@ export function LoginForm() {
 
   return (
     <Form direction='column' onSubmit={onSubmit}>
-      <InputGroup>
-        <Input placeholder='Ваше имя' ref={inputRef} onFocus={onFocus} onChange={onChange} />
-      </InputGroup>
+      <Input placeholder='Ваше имя' ref={inputRef} onFocus={onFocus} onChange={onChange} />
       <div>
         <Button type='submit' disabled={touched && !valid}>
           Войти в профиль

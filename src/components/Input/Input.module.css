@@ -1,0 +1,26 @@
+.inputContainer {
+  width: 384px;
+  position: relative;
+
+  & img {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    left: 16px;
+  }
+}
+
+.input {
+  width: 100%;
+  background-color: rgb(0 0 0 / 10%);
+  padding: 24px 16px;
+  font-size: 14px;
+  line-height: 16px;
+  border-radius: 12px;
+  border: 1px solid #323B54;
+
+  &.withImage {
+    padding: 24px 16px 24px 56px;
+  }
+}

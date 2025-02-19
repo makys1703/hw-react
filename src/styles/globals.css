@@ -1,5 +1,11 @@
 @import url('../../node_modules/normalize.css/normalize.css');
 
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
 :root {
   --fontColor: #fff;
   --accentColor: #7B6EF6;
