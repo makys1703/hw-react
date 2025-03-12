@@ -1,13 +1,6 @@
-import { useReducer, useContext, ChangeEventHandler, FormEventHandler, useEffect, useCallback } from 'react';
+import { useRef, useState, useContext, ChangeEventHandler, FormEventHandler } from 'react';
 import { useLocalStorage } from '../../../../hooks/useLocalStorage.hook';
 import { UserContext, UserContextData } from './../../../../context/User/user.context';
-import { 
-  loginFormReducer, 
-  setValueActionCreator, 
-  submitActionCreator,
-  resetActionCreator,
-  INITIAL_STATE,
-  Control } from './LoginForm.reducer';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
@@ -15,50 +8,53 @@ import { User } from '../../../../types/user.interface';
 
 
 export function LoginForm() {
-  const [formState, dispatch] = useReducer(loginFormReducer, INITIAL_STATE);
-  const { controls, isReadyToSubmit } = formState;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [touched, setTouched] = useState(false);
+  const [valid, setValid] = useState(false);
 
   const { logInUser } = useContext(UserContext) as UserContextData;
   const [localStorageUserData, setLocalStorageUserData] = useLocalStorage<User[]>('users', []);
 
+  const onFocus = () => {
+    if (!touched) {
+      setTouched(() => true);
+    }
+  };
+
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    dispatch(
-      setValueActionCreator(event.target.name as Control, event.target.value)
-    );
+    if (event.target.value.trim().length < 2) {
+      setValid(() => false);
+    } else {
+      setValid(() => true);
+    }
   };
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    dispatch(submitActionCreator());
-  };
 
-  const submitUserLogin = useCallback(() => {
-    const foundUser = localStorageUserData.find(({ name }) => name === controls.name.value);
+    if (!inputRef.current?.value) return;
+
+    const value = inputRef.current.value.trim();
+    const foundUser = localStorageUserData.find(({ name }) => name === value);
+
+    inputRef.current.value = '';
 
     if (foundUser) {
       logInUser(foundUser);
       return;
     }
+
+    const newUser: User = { name: value };
     
-    const newUser: User = { name: controls.name.value };
     setLocalStorageUserData([...localStorageUserData, newUser]);
     logInUser(newUser);
-  }, [localStorageUserData, setLocalStorageUserData, logInUser, controls.name.value]);
-
-  useEffect(() => {
-    if (!isReadyToSubmit) {
-      return;
-    }
-
-    submitUserLogin();
-    dispatch(resetActionCreator());
-  }, [isReadyToSubmit, submitUserLogin]);
+  };
 
   return (
     <Form direction='column' onSubmit={onSubmit}>
-      <Input placeholder='Ваше имя' name='name' value={controls.name.value} onChange={onChange} />
+      <Input placeholder='Ваше имя' ref={inputRef} onFocus={onFocus} onChange={onChange} />
       <div>
-        <Button type='submit'>
+        <Button type='submit' disabled={touched && !valid}>
           Войти в профиль
         </Button>
       </div>

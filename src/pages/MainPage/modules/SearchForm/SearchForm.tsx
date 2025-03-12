@@ -34,12 +34,13 @@ export function SearchForm() {
   };
 
   return (
-    <Form direction='row' onFocus={onFocus} onSubmit={onSubmit}>
+    <Form direction='row' onSubmit={onSubmit}>
       <Input
         name='name'
         placeholder='Введите название'
         ref={inputRef}
         iconSrc={searchIcon}
+        onFocus={onFocus}
         onChange={onChange}
       />
       <Button type='submit' disabled={touched && !valid}>
