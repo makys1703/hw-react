@@ -1,9 +1,21 @@
 import { PropsWithChildren } from 'react';
+import classNames from 'classnames';
 import styles from './NavigationItem.module.css';
 
 
-export function NavigationItem({ children }: PropsWithChildren) {
+interface Props extends PropsWithChildren {
+  active?: boolean
+}
+
+export function NavigationItem({ children, active = false }: Props) {
+
+  const listItemClasses = classNames(styles.listItem, {
+    [styles.active]: active
+  });
+
   return (
-    <li className={styles.listItem}>{ children }</li>
+    <li className={listItemClasses}>
+      { children }
+    </li>
   );
 }

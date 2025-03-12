@@ -1,12 +1,9 @@
 import { useState, useRef, FormEventHandler, ChangeEventHandler } from 'react';
 import { Form } from '../../../../components/Form';
-import { InputGroup } from '../../../../components/InputGroup';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
 import searchIcon from '../../../../assets/icons/search.svg';
 
-
-const searchIconSize = 24;
 
 export function SearchForm() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,16 +35,14 @@ export function SearchForm() {
 
   return (
     <Form direction='row' onSubmit={onSubmit}>
-      <InputGroup>
-        <img src={searchIcon} width={searchIconSize} height={searchIconSize} />
-        <Input
-          name='name'
-          placeholder='Введите название'
-          ref={inputRef}
-          onFocus={onFocus}
-          onChange={onChange}
-        />
-      </InputGroup>
+      <Input
+        name='name'
+        placeholder='Введите название'
+        ref={inputRef}
+        iconSrc={searchIcon}
+        onFocus={onFocus}
+        onChange={onChange}
+      />
       <Button type='submit' disabled={touched && !valid}>
         Найти
       </Button>

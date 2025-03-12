@@ -1,7 +1,32 @@
 .listItem {
+  --itemColor: #A8AEBF;
+
   padding: 12px 16px;
   display: flex;
   column-gap: 8px;
   font-weight: 600;
   line-height: 24px;
+  letter-spacing: 2%;
+  color: var(--itemColor);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accentColor);
+  }
+
+  & a {
+    color: var(--itemColor);
+  }
+
+  & a:hover {
+    color: var(--accentColor);
+  }
+}
+
+.active {
+  color: var(--fontColor);
+
+  & a {
+    color: var(--fontColor);
+  }
 }
