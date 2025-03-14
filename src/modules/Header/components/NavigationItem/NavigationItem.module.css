@@ -22,11 +22,3 @@
     color: var(--accentColor);
   }
 }
-
-.active {
-  color: var(--fontColor);
-
-  & a {
-    color: var(--fontColor);
-  }
-}

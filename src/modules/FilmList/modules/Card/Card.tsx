@@ -1,24 +1,23 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { FavoriteButton } from '../../../../components/FavoriteButton';
-import { CardImage } from '../../components/CardImage';
-import { CardBody } from '../../components/CardBody';
+import { CardImage } from './components/CardImage';
+import { CardBody } from './components/CardBody';
 import { Heading } from '../../../../components/Heading';
-import { Badge } from '../../../../components/Badge';
-import { Film } from '../../../../types/film';
-import starIcon from '../../../../assets/icons/star.svg';
+import { RatingBadge } from '../../../../components/RatingBadge';
+import { Film } from '../../../../types/film.interface';
 import styles from './Card.module.css';
 
 
-export function Card({ name, rating, imageSrc }: Film) {
+export function Card({ id, name, rating, imageSrc }: Film) {
   const [isAdded, setIsAdded] = useState<boolean>(false);
   const toggleStatus = () => setIsAdded(status => !status);
 
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.card}>
-      <Badge className={styles.cardBadge}>
-        <img src={starIcon} alt='Звезда' />
-        { rating }
-      </Badge>
+    <div className={styles.card} onClick={() => navigate(`/movie/${id}`)}>
+      <RatingBadge className={styles.cardBadge} rating={rating}/>
       <CardImage src={imageSrc} />
       <CardBody>
         <Heading level={5}>{ name }</Heading>
