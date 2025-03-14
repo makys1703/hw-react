@@ -1,10 +1,12 @@
 import { useRef, useState, useContext, ChangeEventHandler, FormEventHandler } from 'react';
+import { useNavigate } from 'react-router';
 import { useLocalStorage } from '../../../../hooks/useLocalStorage.hook';
 import { UserContext, UserContextData } from './../../../../context/User/user.context';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
 import { User } from '../../../../types/user.interface';
+import styles from './LoginForm.module.css';
 
 
 export function LoginForm() {
@@ -14,6 +16,8 @@ export function LoginForm() {
 
   const { logInUser } = useContext(UserContext) as UserContextData;
   const [localStorageUserData, setLocalStorageUserData] = useLocalStorage<User[]>('users', []);
+
+  const navigate = useNavigate();
 
   const onFocus = () => {
     if (!touched) {
@@ -35,23 +39,19 @@ export function LoginForm() {
     if (!inputRef.current?.value) return;
 
     const value = inputRef.current.value.trim();
-    const foundUser = localStorageUserData.find(({ name }) => name === value);
+    let user: User | undefined = localStorageUserData.find(({ name }) => name === value);
 
-    inputRef.current.value = '';
-
-    if (foundUser) {
-      logInUser(foundUser);
-      return;
+    if (!user) {
+      user = { name: value };
     }
 
-    const newUser: User = { name: value };
-    
-    setLocalStorageUserData([...localStorageUserData, newUser]);
-    logInUser(newUser);
+    setLocalStorageUserData([...localStorageUserData, user]);
+    logInUser(user);
+    navigate('/');
   };
 
   return (
-    <Form direction='column' onSubmit={onSubmit}>
+    <Form className={styles.loginForm} direction='column' onSubmit={onSubmit}>
       <Input placeholder='Ваше имя' ref={inputRef} onFocus={onFocus} onChange={onChange} />
       <div>
         <Button type='submit' disabled={touched && !valid}>

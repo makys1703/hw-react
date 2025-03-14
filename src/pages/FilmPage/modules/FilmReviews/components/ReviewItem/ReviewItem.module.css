@@ -1,0 +1,22 @@
+.review {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerTitle {
+  color: #C3C8D4;
+  font-weight: 700;
+}
+
+.headerDate {
+  color: #767E94;
+  font-size: 16px;
+  line-height: 1.5;
+}

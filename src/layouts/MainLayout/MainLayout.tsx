@@ -1,14 +1,13 @@
-import { PropsWithChildren } from 'react';
 import { Header } from '../../modules/Header';
 import { PageBody } from './components/PageBody';
+import { Outlet } from 'react-router';
 
-
-export function MainLayout({ children }: PropsWithChildren) {
+export function MainLayout() {
   return (
     <>
       <Header />
       <PageBody>
-        { children }
+        <Outlet />
       </PageBody>
     </>
   );
