@@ -2,12 +2,16 @@ import { PageHeading } from '../../modules/PageHeading';
 import { Paragraph } from '../../components/Paragraph';
 
 
-export function NotFoundPage() {
+interface Props {
+  text: string
+}
+
+export function ErrorPage({ text }: Props) {
   return (
     <>
       <PageHeading title='Ошибка'>
         <Paragraph variant='small'>
-          Страница не найдена.
+          { text }
         </Paragraph>
       </PageHeading>
     </>
