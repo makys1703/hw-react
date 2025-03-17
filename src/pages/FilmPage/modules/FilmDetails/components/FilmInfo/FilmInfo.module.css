@@ -1,0 +1,6 @@
+.filmInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 80px;
+  padding: 80px 0px 35px 0px;
+}

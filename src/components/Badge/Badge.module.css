@@ -14,7 +14,7 @@
   letter-spacing: 2%;
   color: #fff;
   border-radius: 50%;
-  background: var(--accentColor);
+  background-color: var(--accentColor);
   cursor: pointer;
 }
 

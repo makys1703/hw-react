@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router';
 import { UserContext, UserContextData } from '../../context/User/user.context';
 import { Wrapper } from '../../components/Wrapper';
 import { Logo } from './components/Logo';
@@ -15,30 +16,41 @@ const enum LoginText {
   loggedIn = 'Выйти'
 }
 
+const addActiveClass = ({ isActive }: { isActive: boolean }) => isActive ? styles.active : '';
+
 export function Header() {
   const { userData, logOutUser } = useContext(UserContext) as UserContextData;
   const loginText = userData ? LoginText.loggedIn : LoginText.loggedOut;
+  const navigate = useNavigate();
+
+  const logout = () => {
+    logOutUser();
+    navigate('/');
+  };
 
   return (
     <header className={styles.header}>
-      <Wrapper className={styles.headerWrapper}>
+      <Wrapper className={styles.headerWrapper} main>
         <Logo />
         <Navigation>
           <NavigationItem>
-            <a href='/'>Поиск фильмов</a>
+            <NavLink to='/' className={addActiveClass} end>Поиск фильмов</NavLink>
           </NavigationItem>
           <NavigationItem>
-            <a href='/'>Мои фильмы</a>
+            <NavLink to='/favorites' className={addActiveClass}>Мои фильмы</NavLink>
             <Badge variant='circle'>2</Badge>
           </NavigationItem>
           { userData && (
             <NavigationItem>
-              { userData?.name }
+              { userData.name }
               <img src={userIcon} alt='Иконка пользователя' />
             </NavigationItem>)
           }
           <NavigationItem active={true}>
-            <span onClick={logOutUser}>{ loginText }</span>
+            { userData 
+              ? <span onClick={logout}>{ loginText }</span>
+              : <NavLink to='/login' className={addActiveClass} end>{ loginText }</NavLink>
+            }
             <img src={loginIcon} alt='Иконка входа' />
           </NavigationItem>
         </Navigation>

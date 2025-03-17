@@ -1,6 +1,6 @@
 .card {
   position: relative;
-  background: rgb(32 40 62 / 80%);
+  background-color: rgb(32 40 62 / 80%);
   backdrop-filter: blur(80px);
   padding: 8px 8px 16px 8px;
   border-radius: 12px;

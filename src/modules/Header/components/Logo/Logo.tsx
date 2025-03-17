@@ -1,11 +1,12 @@
+import { Link } from 'react-router';
 import logoIcon from '../../../../assets/icons/logo.svg';
 
 const iconSize = 40;
 
 export function Logo() {
   return (
-    <a href='/'>
+    <Link to='/'>
       <img src={logoIcon} width={iconSize} height={iconSize} alt='Логотип' />
-    </a>
+    </Link>
   );
 }

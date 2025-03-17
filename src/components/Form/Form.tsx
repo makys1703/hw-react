@@ -6,12 +6,12 @@ import styles from './Form.module.css';
 interface Props extends 
   PropsWithChildren, 
   DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
-  direction?: 'column' | 'row'
+  direction?: 'column' | 'row',
+  className?: string
 }
 
-export function Form({ children, direction = 'column', ...props }: Props) {
-  const formClasses = classNames({
-    [styles.form]: true,
+export function Form({ children, direction = 'column', className: classFromProps = '', ...props }: Props) {
+  const formClasses = classNames(classFromProps, styles.form, {
     [styles.rowDirection]: direction === 'row'
   });
 

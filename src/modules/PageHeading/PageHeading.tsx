@@ -11,9 +11,11 @@ export function PageHeading({ title, children }: Props) {
   return (
     <div className={styles.pageHeading}>
       <Heading>{ title }</Heading>
-      <div className={styles.text}>
-        { children }
-      </div>
+      { children && (
+        <div className={styles.text}>
+          { children }
+        </div>
+      )} 
     </div>
   );
 }

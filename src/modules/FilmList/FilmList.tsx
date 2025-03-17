@@ -10,7 +10,7 @@ interface Props {
 export function FilmList({ films }: Props) {
   return (
     <div className={styles.filmList}>
-      { films.map((props) => <Card {...props} key={props.id} />) }
+      { films.map((props) => <Card {...props}  />) }
     </div>
   );
 }
