@@ -20,4 +20,6 @@ export function FavoritesPage() {
       </Wrapper>
     </>
   );
-}
+};
+
+export default FavoritesPage;

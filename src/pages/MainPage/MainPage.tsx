@@ -32,3 +32,5 @@ export function MainPage() {
     </>
   );
 }
+
+export default MainPage;

@@ -17,3 +17,5 @@ export function FilmPage() {
     </>
   );
 };
+
+export default FilmPage;

@@ -8,4 +8,6 @@ export function LoginPage() {
       <LoginForm />
     </>
   );
-}
+};
+
+export default LoginPage;
