@@ -5,7 +5,7 @@ import { SearchForm } from './modules/SearchForm';
 import { FilmList } from '../../modules/FilmList';
 import { Paragraph } from '../../components/Paragraph';
 import { Wrapper } from '../../components/Wrapper';
-import { FilmCard } from '../../types/film.interface';
+import { FilmCard } from '../../types/filmCard.interface';
 
 
 export function MainPage() {

@@ -4,7 +4,7 @@ import { CardImage } from './components/CardImage';
 import { CardBody } from './components/CardBody';
 import { Heading } from '../../../../components/Heading';
 import { RatingBadge } from '../../../../components/RatingBadge';
-import { FilmCard } from '../../../../types/film.interface';
+import { FilmCard } from '../../../../types/filmCard.interface';
 import styles from './Card.module.css';
 
 

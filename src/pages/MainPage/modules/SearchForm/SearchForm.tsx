@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect, FormEventHandler, ChangeEventHandler, Dispatch } from 'react';
-import { useApi } from '../../../../hooks/useApi.hook';
+import { useQuery } from './hooks/useQuery.hook';
 import { filterFilms, sortFilms, mapFilms } from './SearchForm.utils';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
 import searchIcon from '../../../../assets/icons/search.svg';
-import { FilmResponse } from '../../../../types/filmResponse.interface';
-import { FilmCard } from '../../../../types/film.interface';
+import { FilmCard } from '../../../../types/filmCard.interface';
 
 
 interface Props {
@@ -18,7 +17,7 @@ export function SearchForm({ setFilms }: Props) {
   const [touched, setTouched] = useState(false);
   const [valid, setValid] = useState(false);
 
-  const { sendRequest, data, isLoading } = useApi<FilmResponse>();
+  const { sendRequest, data, loading } = useQuery();
 
   useEffect(() => {
 
@@ -32,6 +31,8 @@ export function SearchForm({ setFilms }: Props) {
       .sort(sortFilms)
       .slice(0, 12)
       .map(mapFilms);
+
+    console.log('FILMS: ', films);
 
     setFilms(films);
   }, [data, setFilms]);
@@ -55,7 +56,7 @@ export function SearchForm({ setFilms }: Props) {
 
     if (!inputRef.current?.value) return;
 
-    sendRequest(`/?q=${inputRef.current.value.trim()}`);
+    sendRequest(inputRef.current.value.trim());
     
     inputRef.current.value = '';
   };
@@ -70,7 +71,7 @@ export function SearchForm({ setFilms }: Props) {
         onFocus={onFocus}
         onChange={onChange}
       />
-      <Button type='submit' disabled={touched && !valid || isLoading}>
+      <Button type='submit' disabled={touched && !valid || loading}>
         Найти
       </Button>
     </Form>

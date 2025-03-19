@@ -1,4 +1,4 @@
-import { FilmCard } from '../types/film.interface';
+import { FilmCard } from '../types/filmCard.interface';
 import { IFilmDetails } from '../types/filmDetails.interface';
 import { FilmDetailsResponse } from '../types/filmDetailsResponse.interface';
 

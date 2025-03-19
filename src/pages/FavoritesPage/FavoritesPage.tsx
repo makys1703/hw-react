@@ -1,7 +1,7 @@
 import { FilmList } from '../../modules/FilmList';
 import { PageHeading } from '../../modules/PageHeading';
 import { Wrapper } from '../../components/Wrapper';
-import { FilmCard } from '../../types/film.interface';
+import { FilmCard } from '../../types/filmCard.interface';
 import { Paragraph } from '../../components/Paragraph';
 
 

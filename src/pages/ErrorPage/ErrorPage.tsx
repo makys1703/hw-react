@@ -17,3 +17,5 @@ export function ErrorPage({ text }: Props) {
     </>
   );
 }
+
+export default ErrorPage;

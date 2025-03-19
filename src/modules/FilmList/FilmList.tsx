@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Card } from './modules/Card';
 import { NotFound } from './components/NotFound';
-import { FilmCard } from '../../types/film.interface';
+import { FilmCard } from '../../types/filmCard.interface';
 import styles from './FilmList.module.css';
 
 
