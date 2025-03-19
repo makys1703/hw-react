@@ -1,20 +1,21 @@
-import { useParams } from 'react-router';
-import { FilmDetails } from './modules/FilmDetails';
-import { FilmReviews } from './modules/FilmReviews';
+import { useLoaderData } from 'react-router';
 import { useScrollReset } from '../../hooks/useScrollReset.hook';
-import { filmsData } from '../../store/films';
+import { FilmDetails } from './modules/FilmDetails';
+import { FilmReview } from './modules/FilmReview';
+import { IFilmDetails } from '../../types/filmDetails.interface';
 
 
 export function FilmPage() {
-  const { id } = useParams();
-  const filmProps = filmsData.find(f => f.id === id);
+  const data = useLoaderData() as IFilmDetails;
 
   useScrollReset();
 
   return (
     <>
-      <FilmDetails {...filmProps!} />
-      <FilmReviews />
+      <FilmDetails data={data} />
+      <FilmReview review={data.review} />
     </>
   );
-}
+};
+
+export default FilmPage;

@@ -1,0 +1,1 @@
+export { FilmReview } from './FilmReview';

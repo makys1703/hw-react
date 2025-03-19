@@ -1,22 +1,25 @@
 import { FilmList } from '../../modules/FilmList';
 import { PageHeading } from '../../modules/PageHeading';
 import { Wrapper } from '../../components/Wrapper';
-import { filmsData } from '../../store/films';
-import { Film } from '../../types/film.interface';
+import { FilmCard } from '../../types/filmCard.interface';
+import { Paragraph } from '../../components/Paragraph';
 
 
-const films: Film[] = [
-  filmsData[0],
-  filmsData[3]
-];
+const films: FilmCard[] = [];
+
 
 export function FavoritesPage() {
   return (
     <>
       <PageHeading title='Избранное' />
       <Wrapper style={{ paddingTop: 40, paddingBottom: 58 }}>
-        <FilmList films={films}/>
+        { films.length 
+          ? <FilmList films={films}/>
+          : <Paragraph>Упс... Ничего не найдено</Paragraph>
+        }
       </Wrapper>
     </>
   );
-}
+};
+
+export default FavoritesPage;
