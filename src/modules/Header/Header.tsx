@@ -1,11 +1,12 @@
-import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router';
-import { UserContext, UserContextData } from '../../context/User/user.context';
+import { useAppDispatch } from '../../hooks/useAppDispatch.hook';
+import { useAppSelector } from '../../hooks/useAppSelector.hook';
 import { Wrapper } from '../../components/Wrapper';
 import { Logo } from './components/Logo';
 import { Navigation } from './components/Navigation';
 import { NavigationItem } from './components/NavigationItem';
 import { Badge } from '../../components/Badge';
+import { userActions } from '../../store/user';
 import loginIcon from '../../assets/icons/login.svg';
 import userIcon from '../../assets/icons/user.svg';
 import styles from './Header.module.css';
@@ -19,12 +20,15 @@ const enum LoginText {
 const addActiveClass = ({ isActive }: { isActive: boolean }) => isActive ? styles.active : '';
 
 export function Header() {
-  const { userData, logOutUser } = useContext(UserContext) as UserContextData;
+
+  const userData = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
   const loginText = userData ? LoginText.loggedIn : LoginText.loggedOut;
   const navigate = useNavigate();
 
   const logout = () => {
-    logOutUser();
+    dispatch(userActions.logoutUser());
     navigate('/');
   };
 

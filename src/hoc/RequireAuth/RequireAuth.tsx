@@ -1,9 +1,10 @@
-import { useContext, PropsWithChildren } from 'react';
-import { UserContext, UserContextData } from '../../context/User/user.context';
+import { PropsWithChildren } from 'react';
 import { Navigate } from 'react-router';
+import { useAppSelector } from '../../hooks/useAppSelector.hook';
 
 export function RequireAuth({ children }: PropsWithChildren) {
-  const { userData } = useContext(UserContext) as UserContextData;
+
+  const userData = useAppSelector((state) => state.user);
 
   if (!userData) {
     return <Navigate to='/login' replace/>;

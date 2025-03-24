@@ -1,10 +1,11 @@
-import { useRef, useState, useContext, ChangeEventHandler, FormEventHandler } from 'react';
+import { useRef, useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch.hook';
 import { useLocalStorage } from '../../../../hooks/useLocalStorage.hook';
-import { UserContext, UserContextData } from './../../../../context/User/user.context';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
+import { userActions } from '../../../../store/user';
 import { User } from '../../../../types/user.interface';
 import styles from './LoginForm.module.css';
 
@@ -14,9 +15,9 @@ export function LoginForm() {
   const [touched, setTouched] = useState(false);
   const [valid, setValid] = useState(false);
 
-  const { logInUser } = useContext(UserContext) as UserContextData;
   const [localStorageUserData, setLocalStorageUserData] = useLocalStorage<User[]>('users', []);
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onFocus = () => {
@@ -46,7 +47,7 @@ export function LoginForm() {
     }
 
     setLocalStorageUserData([...localStorageUserData, user]);
-    logInUser(user);
+    dispatch(userActions.loginUser(user));
     navigate('/');
   };
 
