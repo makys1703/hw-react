@@ -1,20 +1,38 @@
 import { api } from '../../api';
+import { getDeferedStore } from '../../router/router.utils';
 import { mapFilmCardResponse } from '../../utils/mapFilmResponse.utils';
+import { filmsActions, filmsSelectors, filmsUtils } from '../../store/films';
 import { FilmCard } from '../../types/filmCard.interface';
 
 
-const filmIds = ['3480822', '9376612', '9140554', '0460649', '6468322', '0108778', '0898266', '0369179'];
-
 export const MainPageLoader = async (): Promise<FilmCard[]> => {
-  const responses = filmIds.map((id) => api.getFilmDetailsById(id));
+  const store = await getDeferedStore();
+
+  const storeFilms = filmsSelectors.selectFilms(store.getState());
+  const cachedFilms = storeFilms.length ? storeFilms : filmsUtils.getFilms();
+  
+  if (cachedFilms) {
+    store.dispatch(
+      filmsActions.setLoadedDefaultFilms(cachedFilms)
+    );
+    return cachedFilms;
+  };
+      
+  const responses = filmsUtils.defaultFilmIds.map((id) => api.getFilmDetailsById(id));
   const awaitedData = await Promise.all(responses);
-
-  return awaitedData.map(({ data, error }) => {
-
+        
+  const defaultFilms = awaitedData.map(({ data, error }) => {
     if (!data || error) {
       throw new Error(error);
     }
-
+        
     return mapFilmCardResponse(data);
   });
+  
+  filmsUtils.setFilms(defaultFilms);
+  store.dispatch(
+    filmsActions.setLoadedDefaultFilms(defaultFilms)
+  );
+  
+  return defaultFilms;
 };

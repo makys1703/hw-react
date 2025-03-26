@@ -1,41 +1,20 @@
-import { useState, useRef, useEffect, FormEventHandler, ChangeEventHandler, Dispatch } from 'react';
-import { useQuery } from './hooks/useQuery.hook';
-import { filterFilms, sortFilms, mapFilms } from './SearchForm.utils';
+import { useState, useRef, FormEventHandler, ChangeEventHandler } from 'react';
+import { useAppSelector } from '../../../../hooks/useAppSelector.hook';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch.hook';
+import { filmsActions, filmsSelectors } from '../../../../store/films';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
 import searchIcon from '../../../../assets/icons/search.svg';
-import { FilmCard } from '../../../../types/filmCard.interface';
 
 
-interface Props {
-  setFilms: Dispatch<React.SetStateAction<FilmCard[]>>
-};
-
-export function SearchForm({ setFilms }: Props) {
+export function SearchForm() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [touched, setTouched] = useState(false);
   const [valid, setValid] = useState(false);
 
-  const { sendRequest, data, loading } = useQuery();
-
-  useEffect(() => {
-
-    if (!data?.description.length) {
-      setFilms([]);
-      return;
-    }
-
-    const films: FilmCard[] = data.description
-      .filter(filterFilms)
-      .sort(sortFilms)
-      .slice(0, 12)
-      .map(mapFilms);
-
-    console.log('FILMS: ', films);
-
-    setFilms(films);
-  }, [data, setFilms]);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(filmsSelectors.selectFilmsLoading);
 
   const onFocus = () => {
     if (!touched) {
@@ -54,9 +33,9 @@ export function SearchForm({ setFilms }: Props) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
-    if (!inputRef.current?.value) return;
+    if (!inputRef.current?.value?.trim()) return;
 
-    sendRequest(inputRef.current.value.trim());
+    dispatch(filmsActions.loadFilmByQuery(inputRef.current?.value?.trim()));
     
     inputRef.current.value = '';
   };

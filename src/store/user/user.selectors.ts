@@ -1,8 +1,36 @@
-import { RootState } from '../';
+import { createAppSelector, rootSelector } from '../../store';
+import { FilmCard } from '../../types/filmCard.interface';
 
 
-const selectUser = (state: RootState) => state.user;
+const selectUserName = createAppSelector(
+  rootSelector,
+  (state) => state.user?.name
+);
+
+const selectAuth = createAppSelector(
+  rootSelector,
+  (state) => !!state.user?.name
+);
+
+const selectFavorites = createAppSelector(
+  rootSelector,
+  (state) => state.user?.favorites
+);
+
+const selectFavoriteStatus = createAppSelector(
+  [
+    selectFavorites,
+    (_, filmId: string) => filmId
+  ],
+  (favorites: FilmCard[] | undefined, filmId) => 
+    favorites 
+      ? !!favorites.find(({ id }) => id === filmId) 
+      : false
+);
 
 export const userSelectors = {
-  selectUser
+  selectUserName,
+  selectAuth,
+  selectFavorites,
+  selectFavoriteStatus
 };

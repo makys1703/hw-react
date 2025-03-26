@@ -28,7 +28,7 @@ export function FilmDetails({ data }: Props) {
           <Paragraph>
             { data.description }
           </Paragraph>
-          <ButtonSection rating={data.rating} />
+          <ButtonSection filmId={data.id} rating={data.rating} />
           <DescriptionField label='Тип' text={data.type} />
           <DescriptionField label='Дата выхода' text={data.date} />
           <DescriptionField label='Длительность' text={duration} />

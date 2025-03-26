@@ -1,15 +1,36 @@
 import { LoaderFunction } from 'react-router';
 import { api } from '../../api';
+import { getDeferedStore } from '../../router/router.utils';
 import { mapFilmDetailsResponse } from '../../utils/mapFilmResponse.utils';
+import { filmDetailsActions, filmDetailsUtils } from '../../store/filmDetails';
 import { IFilmDetails } from '../../types/filmDetails.interface';
 
 
 export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmDetails> => {
-  const {data, error} = await api.getFilmDetailsById(params.id!);
+  const store = await getDeferedStore();
+
+  const cachedFilmDetails = filmDetailsUtils.getFilmDetails(params.id as string);
+
+  if (cachedFilmDetails) {
+    store.dispatch(
+      filmDetailsActions.setLoadedFilmDetails(cachedFilmDetails)
+    );
+    return cachedFilmDetails;
+  };
+
+  const {data, error} = await api.getFilmDetailsById(params.id as string);
 
   if (!data || error) {
     throw new Error(error);
   }
 
-  return mapFilmDetailsResponse(data);
+  const filmDetails = mapFilmDetailsResponse(data);
+
+  filmDetailsUtils.addFilmDetails(filmDetails);
+  store.dispatch(
+    filmDetailsActions.setLoadedFilmDetails(filmDetails)
+  );
+
+  return filmDetails;
+  
 };

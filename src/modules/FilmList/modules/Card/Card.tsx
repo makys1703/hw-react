@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch.hook';
+import { useAppSelector } from '../../../../hooks/useAppSelector.hook';
+import { userActions, userSelectors } from '../../../../store/user';
 import { FavoriteButton } from '../../../../components/FavoriteButton';
 import { CardImage } from './components/CardImage';
 import { CardBody } from './components/CardBody';
@@ -8,14 +10,20 @@ import { FilmCard } from '../../../../types/filmCard.interface';
 import styles from './Card.module.css';
 
 
-interface Props extends FilmCard{
+interface Props extends FilmCard {
   openCard: () => void
 };
 
-export function Card({ title, rating, image, openCard }: Props) {
-  const [isAdded, setIsAdded] = useState<boolean>(false);
+export function Card({ id, title, rating, image, openCard }: Props) {
+  const dispatch = useAppDispatch();
   
-  const toggleStatus = () => setIsAdded(status => !status);
+  const favoriteStatus = useAppSelector(
+    (state) => userSelectors.selectFavoriteStatus(state, id)
+  );
+  
+  const toggleStatus = () => {
+    dispatch(userActions.toggleFavorite(id));
+  };
 
   return (
     <div className={styles.card} onClick={openCard}>
@@ -23,7 +31,7 @@ export function Card({ title, rating, image, openCard }: Props) {
       <CardImage src={image} />
       <CardBody>
         <Heading level={5}>{ title }</Heading>
-        <FavoriteButton status={isAdded} toggleStatus={toggleStatus}/>
+        <FavoriteButton status={favoriteStatus} toggleStatus={toggleStatus}/>
       </CardBody>
     </div>
   );
