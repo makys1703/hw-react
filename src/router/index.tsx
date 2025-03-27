@@ -51,8 +51,8 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: mainPageElement,
-        loader: MainPageLoader
-        // errorElement: <ErrorPage text={'FETCHING_DATA_ERROR_MAINPAGE!!!'} />
+        loader: MainPageLoader,
+        errorElement: <ErrorPage text={FETCHING_DATA_ERROR} />
       },
       {
         path: '/favorites',

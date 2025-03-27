@@ -1,11 +1,14 @@
-import { createAppAsyncThunk } from '..';
-import { api } from '../../api';
-import { filterFilms, mapFilms, sortFilms } from '../../pages/MainPage/modules/SearchForm/SearchForm.utils';
-import { FilmCard } from '../../types/filmCard.interface';
 import { createAction } from '@reduxjs/toolkit';
+import { api } from '../../api';
+import { createAppAsyncThunk } from '..';
+import { filmsUtils } from './films.utils';
+import { FilmCard } from '../../types/filmCard.interface';
 
+const { responseMapper } = filmsUtils;
 
-const setLoadedDefaultFilms = createAction<FilmCard[]>('films/loadDefaultFilms');
+const setLoadedDefaultFilms = createAction<FilmCard[]>('films/setLoadedDefaultFilms');
+
+const addFilmToCache = createAction<FilmCard>('films/addFilmToCache');
 
 const loadFilmByQuery = createAppAsyncThunk(
   'films/loadFilmsByQuery',
@@ -17,14 +20,15 @@ const loadFilmByQuery = createAppAsyncThunk(
     }
 
     return data.description
-      .filter(filterFilms)
-      .sort(sortFilms)
+      .filter(responseMapper.filterFilms)
+      .sort(responseMapper.sortFilms)
       .slice(0, 12)
-      .map(mapFilms);
+      .map(responseMapper.mapFilms);
   }
 );
 
 export const filmsActions = {
   setLoadedDefaultFilms,
-  loadFilmByQuery
+  loadFilmByQuery,
+  addFilmToCache
 };

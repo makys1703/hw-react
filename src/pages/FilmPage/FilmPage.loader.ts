@@ -1,9 +1,10 @@
 import { LoaderFunction } from 'react-router';
 import { api } from '../../api';
 import { getDeferedStore } from '../../router/router.utils';
-import { mapFilmDetailsResponse } from '../../utils/mapFilmResponse.utils';
+import { mapFilmCardResponse, mapFilmDetailsResponse } from '../../utils/mapFilmResponse.utils';
 import { filmDetailsActions, filmDetailsUtils } from '../../store/filmDetails';
 import { IFilmDetails } from '../../types/filmDetails.interface';
+import { filmsActions } from '../../store/films';
 
 
 export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmDetails> => {
@@ -25,10 +26,16 @@ export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmD
   }
 
   const filmDetails = mapFilmDetailsResponse(data);
+  const filmCard = mapFilmCardResponse(data);
 
   filmDetailsUtils.addFilmDetails(filmDetails);
+
   store.dispatch(
     filmDetailsActions.setLoadedFilmDetails(filmDetails)
+  );
+
+  store.dispatch(
+    filmsActions.addFilmToCache(filmCard)
   );
 
   return filmDetails;

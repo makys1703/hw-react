@@ -1,4 +1,5 @@
 import { FilmCard } from '../../types/filmCard.interface';
+import { FilmCardsResponseDescription } from '../../types/filmCardsResponse.interface';
 
 const LOCALSTORAGE_KEY = 'films';
 
@@ -18,8 +19,24 @@ const setFilms = (films: FilmCard[]): void => {
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(films));
 };
 
+const filterFilms = (film: FilmCardsResponseDescription) => !!film['#IMG_POSTER']?.trim();
+
+const sortFilms = (a: FilmCardsResponseDescription, b: FilmCardsResponseDescription) => b['#RANK'] - a['#RANK'];
+
+const mapFilms = (film: FilmCardsResponseDescription): FilmCard => ({
+  id: film['#IMDB_ID'].slice(2),
+  title: film['#TITLE'],
+  rating: film['#RANK'],
+  image: film['#IMG_POSTER']!
+});
+
 export const filmsUtils = {
   getFilms,
   setFilms,
-  defaultFilmIds
+  defaultFilmIds,
+  responseMapper: {
+    filterFilms,
+    sortFilms,
+    mapFilms
+  }
 };

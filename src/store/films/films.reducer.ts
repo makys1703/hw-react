@@ -16,7 +16,7 @@ const initialState: FilmsState = {
   loading: false
 };
 
-const { setLoadedDefaultFilms, loadFilmByQuery } = filmsActions;
+const { setLoadedDefaultFilms, loadFilmByQuery, addFilmToCache } = filmsActions;
 
 const cacheReducer = (data: Record<string, FilmCard>, item: FilmCard) => {
   if (data[item.id]) {
@@ -37,9 +37,17 @@ export const filmsReducer = createReducer<FilmsState>(
       loading: false
     }));
 
+    builder.addCase(addFilmToCache, (state, { payload }) => state.cache[payload.id] ? state : ({
+      ...state,
+      cache: {
+        ...state.cache,
+        [payload.id]: payload
+      }
+    }));
+
     builder.addCase(loadFilmByQuery.fulfilled, (state, { payload }) => ({
+      ...state,
       data: payload,
-      cache: payload.reduce(cacheReducer, {...state.cache}),
       loading: false
     }));
 

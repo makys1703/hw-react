@@ -12,12 +12,9 @@ export const MainPageLoader = async (): Promise<FilmCard[]> => {
   const cachedFilms = storeFilms.length ? storeFilms : filmsUtils.getFilms();
   
   if (cachedFilms) {
-    store.dispatch(
-      filmsActions.setLoadedDefaultFilms(cachedFilms)
-    );
     return cachedFilms;
   };
-      
+
   const responses = filmsUtils.defaultFilmIds.map((id) => api.getFilmDetailsById(id));
   const awaitedData = await Promise.all(responses);
         

@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router';
 import { useAppDispatch } from '../../hooks/useAppDispatch.hook';
 import { useAppSelector } from '../../hooks/useAppSelector.hook';
+import { userActions, userSelectors } from '../../store/user';
 import { Wrapper } from '../../components/Wrapper';
 import { Logo } from './components/Logo';
 import { Navigation } from './components/Navigation';
 import { NavigationItem } from './components/NavigationItem';
 import { Badge } from '../../components/Badge';
-import { userActions, userSelectors } from '../../store/user';
 import loginIcon from '../../assets/icons/login.svg';
 import userIcon from '../../assets/icons/user.svg';
 import styles from './Header.module.css';

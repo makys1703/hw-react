@@ -1,6 +1,6 @@
 import { createAppAsyncThunk } from '../../store';
+import { filmsActions, filmsSelectors } from '../films';
 import { userSelectors } from './user.selectors';
-import { filmsSelectors } from '../films';
 import { userUtils } from './user.utils';
 import { User } from '../../types/user.interface';
 import { FilmCard } from '../../types/filmCard.interface';
@@ -30,25 +30,23 @@ const logout = createAppAsyncThunk('user/logout',
 );
 
 const toggleFavorite = createAppAsyncThunk('user/toggleFavorite',
-  async (filmId: string, { getState }): Promise<FilmCard[]> => {
-
-    if (!filmId) {
-      throw new Error('No film id');
-    }
+  async (filmId: string, { dispatch, getState }): Promise<FilmCard[]> => {
 
     const userName = userSelectors.selectUserName(getState());
 
     if (!userName) {
-      throw new Error('No username');
+      throw new Error('No auth data! You need to sign in!');
     };
 
     const film = 
-      filmsSelectors.selectFilm(getState(), filmId) 
+      filmsSelectors.selectFilm(getState(), filmId)
       ?? userUtils.getFavoriteFilm(userName, filmId);
 
     if (!film) {
       throw new Error('No film data');
     };
+
+    dispatch(filmsActions.addFilmToCache(film));
 
     const data = userUtils.toggleFavoriteFilm(userName, film);
 

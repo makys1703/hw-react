@@ -16,8 +16,8 @@ const selectFilm = createAppSelector(
     rootSelector,
     (_, id: string) => id
   ],
-  (state, id) => 
-    state.films.data.find((film) => film.id === id) ?? state.films.cache[id]
+  (state, id) =>
+    state.films.cache[id] ?? state.films.data.find((film) => film.id === id)
 );
 
 const selectFilmsLoading = createAppSelector(
