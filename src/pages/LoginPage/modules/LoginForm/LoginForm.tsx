@@ -1,9 +1,11 @@
-import { useRef, useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { useRef, useState, ChangeEventHandler, FormEventHandler, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../../../hooks/useAppDispatch.hook';
+import { useAppSelector } from '../../../../hooks/useAppSelector.hook';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Input';
 import { Button } from '../../../../components/Button';
-import { userActions } from '../../../../store/user';
+import { userActions, userSelectors } from '../../../../store/user';
 import styles from './LoginForm.module.css';
 
 
@@ -13,6 +15,15 @@ export function LoginForm() {
   const [valid, setValid] = useState(false);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isAuth = useAppSelector(userSelectors.selectAuth);
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/');
+    }
+  }, [isAuth, navigate]);
 
   const onFocus = () => {
     if (!touched) {

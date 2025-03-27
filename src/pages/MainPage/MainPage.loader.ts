@@ -9,10 +9,18 @@ export const MainPageLoader = async (): Promise<FilmCard[]> => {
   const store = await getDeferedStore();
 
   const storeFilms = filmsSelectors.selectFilms(store.getState());
-  const cachedFilms = storeFilms.length ? storeFilms : filmsUtils.getFilms();
+  const localStorageFilms = filmsUtils.getFilms();
   
-  if (cachedFilms) {
-    return cachedFilms;
+  if (localStorageFilms && !storeFilms.length) {
+    store.dispatch(
+      filmsActions.setLoadedDefaultFilms(localStorageFilms)
+    );
+
+    return localStorageFilms;
+  }
+  
+  if (storeFilms.length) {
+    return storeFilms;
   };
 
   const responses = filmsUtils.defaultFilmIds.map((id) => api.getFilmDetailsById(id));

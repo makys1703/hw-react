@@ -1,5 +1,5 @@
 import { createAppAsyncThunk } from '../../store';
-import { filmsActions, filmsSelectors } from '../films';
+import { filmsActions, filmsSelectors, filmsUtils } from '../films';
 import { userSelectors } from './user.selectors';
 import { userUtils } from './user.utils';
 import { User } from '../../types/user.interface';
@@ -7,11 +7,13 @@ import { FilmCard } from '../../types/filmCard.interface';
 
 
 const login = createAppAsyncThunk('user/login',
-  async (userName: string, thunkApi): Promise<User> => {
+  async (userName: string, { dispatch }): Promise<User> => {
     const foundUser = userUtils.getUser(userName);
 
-    await thunkApi.extra.router.navigate('/');
-
+    dispatch(
+      filmsActions.setLoadedDefaultFilms(filmsUtils.getFilms() ?? [])
+    );
+    
     if (!foundUser) {
       userUtils.loginUser(userName);
       return userUtils.addUser(userName);
@@ -23,9 +25,9 @@ const login = createAppAsyncThunk('user/login',
 );
 
 const logout = createAppAsyncThunk('user/logout',
-  async (_, thunkApi): Promise<void> => {
+  async (_, { extra }): Promise<void> => {
     userUtils.logoutUser();
-    await thunkApi.extra.router.navigate('/');
+    await extra.router.navigate('/');
   }
 );
 
