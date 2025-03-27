@@ -1,5 +1,5 @@
 import { LoaderFunction } from 'react-router';
-import { api } from '../../api';
+import { filmDetailsApi } from '../../api/filmDetails';
 import { getDeferedStore } from '../../router/router.utils';
 import { mapFilmCardResponse, mapFilmDetailsResponse } from '../../utils/mapFilmResponse.utils';
 import { filmDetailsActions, filmDetailsUtils } from '../../store/filmDetails';
@@ -19,7 +19,7 @@ export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmD
     return cachedFilmDetails;
   };
 
-  const {data, error} = await api.getFilmDetailsById(params.id as string);
+  const {data, error} = await filmDetailsApi.getFilmDetailsById(params.id as string);
 
   if (!data || error) {
     throw new Error(error);

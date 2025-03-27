@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useAppSelector } from '../../hooks/useAppSelector.hook';
+import { filmsSelectors } from '../../store/films';
 import { Card } from './modules/Card';
+import { Paragraph } from '../../components/Paragraph';
 import { NotFound } from './components/NotFound';
 import { FilmCard } from '../../types/filmCard.interface';
 import styles from './FilmList.module.css';
-import { useAppSelector } from '../../hooks/useAppSelector.hook';
-import { filmsSelectors } from '../../store/films';
 
 
 interface Props {
@@ -24,8 +25,8 @@ export function FilmList({ films }: Props) {
     navigate(`/movie/${id}`);
   };
 
-  const showList = !globalLoading && films.length > 0;
-  const showNotFound = !globalLoading && films.length < 1;
+  const showList = !globalLoading && Boolean(films.length);
+  const showNotFound = !globalLoading && films.length === 0;
 
   return (
     <>
@@ -37,7 +38,7 @@ export function FilmList({ films }: Props) {
         </div>
       )}
       { showNotFound && <NotFound /> }
-      { globalLoading && <p>Загрузка...</p> }
+      { globalLoading && <Paragraph>Загрузка...</Paragraph> }
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { api } from '../../api';
+import { filmDetailsApi } from '../../api/filmDetails';
 import { getDeferedStore } from '../../router/router.utils';
 import { mapFilmCardResponse } from '../../utils/mapFilmResponse.utils';
 import { filmsActions, filmsSelectors, filmsUtils } from '../../store/films';
@@ -23,7 +23,7 @@ export const MainPageLoader = async (): Promise<FilmCard[]> => {
     return storeFilms;
   };
 
-  const responses = filmsUtils.defaultFilmIds.map((id) => api.getFilmDetailsById(id));
+  const responses = filmsUtils.defaultFilmIds.map((id) => filmDetailsApi.getFilmDetailsById(id));
   const awaitedData = await Promise.all(responses);
         
   const defaultFilms = awaitedData.map(({ data, error }) => {

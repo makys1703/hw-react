@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { api } from '../../api';
+import { filmCardsApi } from '../../api/filmCards';
 import { createAppAsyncThunk } from '..';
 import { filmsUtils } from './films.utils';
 import { FilmCard } from '../../types/filmCard.interface';
@@ -13,7 +13,7 @@ const addFilmToCache = createAction<FilmCard>('films/addFilmToCache');
 const loadFilmByQuery = createAppAsyncThunk(
   'films/loadFilmsByQuery',
   async (query: string): Promise<FilmCard[]> => {
-    const { data } = await api.getFilmCardsByQuery(query);
+    const { data } = await filmCardsApi.getFilmCardsByQuery(query);
 
     if (!data) {
       throw new Error('Film loading error!');

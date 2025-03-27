@@ -13,7 +13,7 @@ export function FavoritesPage() {
     <>
       <PageHeading title='Избранное' />
       <Wrapper style={{ paddingTop: 40, paddingBottom: 58 }}>
-        { favoriteFilms?.length 
+        { favoriteFilms && Boolean(favoriteFilms.length)
           ? <FilmList films={favoriteFilms}/>
           : <Paragraph>Упс... Ничего не найдено</Paragraph>
         }
