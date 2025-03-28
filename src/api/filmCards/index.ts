@@ -1,0 +1,1 @@
+export { filmCardsApi } from './filmCards.api';

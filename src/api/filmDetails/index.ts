@@ -1,0 +1,1 @@
+export { filmDetailsApi } from './filmDetails.api';

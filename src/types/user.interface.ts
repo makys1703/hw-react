@@ -1,3 +1,7 @@
+import { FilmCard } from './filmCard.interface';
+
+
 export interface User {
-  name: string
-}
+  name: string,
+  favorites: FilmCard[]
+};
