@@ -3,29 +3,36 @@ import { FilmHeader } from './components/FilmHeader';
 import { FilmInfo } from './components/FilmInfo';
 import { ButtonSection } from './components/ButtonSection';
 import { DescriptionField } from './components/DescriptionField';
-import { Film } from '../../../../types/film.interface';
+import { IFilmDetails } from '../../../../types/filmDetails.interface';
 import styles from './FilmDetails.module.css';
 
 
-export function FilmDetails({ name, rating, imageSrc }: Film) {
+interface Props {
+  data: Omit<IFilmDetails, 'review'>
+}
+
+export function FilmDetails({ data }: Props) {
+  const genre = data.genre.join(', ');
+  const duration = `${data.duration} мин`;
+
   return (
     <div className={styles.filmDetails}>
       <FilmHeader>
-        { name }
+        { data.title }
       </FilmHeader>
       <FilmInfo>
         <div className={styles.imageColumn}>
-          <img src={imageSrc} alt='Постер фильма' loading='lazy' />
+          <img src={data.image} alt='Постер фильма' loading='lazy' />
         </div>
         <div className={styles.infoColumn}>
           <Paragraph>
-            After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.
+            { data.description }
           </Paragraph>
-          <ButtonSection rating={rating} />
-          <DescriptionField label='Тип' text='Movie' />
-          <DescriptionField label='Дата выхода' text='2019-04-24' />
-          <DescriptionField label='Длительность' text='181 мин' />
-          <DescriptionField label='Жанр' text='Adventure,  Science Fiction, Action' />
+          <ButtonSection rating={data.rating} />
+          <DescriptionField label='Тип' text={data.type} />
+          <DescriptionField label='Дата выхода' text={data.date} />
+          <DescriptionField label='Длительность' text={duration} />
+          <DescriptionField label='Жанр' text={genre} />
         </div>
       </FilmInfo>
     </div>

@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
 import { FavoriteButton } from '../../../../components/FavoriteButton';
 import { CardImage } from './components/CardImage';
 import { CardBody } from './components/CardBody';
 import { Heading } from '../../../../components/Heading';
 import { RatingBadge } from '../../../../components/RatingBadge';
-import { Film } from '../../../../types/film.interface';
+import { FilmCard } from '../../../../types/filmCard.interface';
 import styles from './Card.module.css';
 
 
-export function Card({ id, name, rating, imageSrc }: Film) {
+interface Props extends FilmCard{
+  openCard: () => void
+};
+
+export function Card({ title, rating, image, openCard }: Props) {
   const [isAdded, setIsAdded] = useState<boolean>(false);
+  
   const toggleStatus = () => setIsAdded(status => !status);
 
-  const navigate = useNavigate();
-
   return (
-    <div className={styles.card} onClick={() => navigate(`/movie/${id}`)}>
+    <div className={styles.card} onClick={openCard}>
       <RatingBadge className={styles.cardBadge} rating={rating}/>
-      <CardImage src={imageSrc} />
+      <CardImage src={image} />
       <CardBody>
-        <Heading level={5}>{ name }</Heading>
+        <Heading level={5}>{ title }</Heading>
         <FavoriteButton status={isAdded} toggleStatus={toggleStatus}/>
       </CardBody>
     </div>
