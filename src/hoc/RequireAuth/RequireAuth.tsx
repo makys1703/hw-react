@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch.hook';
 import { userActions, userSelectors, userUtils } from '../../store/user';
 
 
-export function RequireAuth({ children }: PropsWithChildren) {
+export function RequireAuth({ children }: PropsWithChildren) {  
   const dispatch = useAppDispatch();
 
   const storeAuth = useAppSelector(userSelectors.selectAuth);

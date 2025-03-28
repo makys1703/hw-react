@@ -1,5 +1,6 @@
 import { FilmCard } from '../../types/filmCard.interface';
 import { User } from '../../types/user.interface';
+import { UserError } from './user.constants';
 
 
 type UsersCache = Record<string, User>;
@@ -22,7 +23,7 @@ const setUser = (name: string, data: User): void => {
   const exists = getUser(name);
 
   if (exists) {
-    throw new Error('User is already exists');
+    throw new Error(UserError.alreadyExists);
   }
 
   const users = getUsers() ?? {};
@@ -38,7 +39,7 @@ const patchUser = (name: string, data: Partial<User>): void => {
   const user = getUser(name);
 
   if (!user) {
-    throw new Error('User not found!');
+    throw new Error(UserError.notFound);
   };
 
   const users = getUsers() ?? {};

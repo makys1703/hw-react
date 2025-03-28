@@ -1,18 +1,15 @@
 import { createAppAsyncThunk } from '../../store';
-import { filmsActions, filmsSelectors, filmsUtils } from '../films';
+import { filmsActions, filmsSelectors } from '../films';
 import { userSelectors } from './user.selectors';
 import { userUtils } from './user.utils';
 import { User } from '../../types/user.interface';
 import { FilmCard } from '../../types/filmCard.interface';
+import { UserError } from './user.constants';
 
 
 const login = createAppAsyncThunk('user/login',
-  async (userName: string, { dispatch }): Promise<User> => {
+  async (userName: string): Promise<User> => {
     const foundUser = userUtils.getUser(userName);
-
-    dispatch(
-      filmsActions.setLoadedDefaultFilms(filmsUtils.getFilms() ?? [])
-    );
     
     if (!foundUser) {
       userUtils.loginUser(userName);
@@ -25,9 +22,10 @@ const login = createAppAsyncThunk('user/login',
 );
 
 const logout = createAppAsyncThunk('user/logout',
-  async (_, { extra }): Promise<void> => {
+  async (_, { dispatch, extra }): Promise<void> => {
+    dispatch(filmsActions.deleteFilmsData());
     userUtils.logoutUser();
-    await extra.router.navigate('/');
+    await extra.router.navigate('/login');
   }
 );
 
@@ -37,7 +35,7 @@ const toggleFavorite = createAppAsyncThunk('user/toggleFavorite',
     const userName = userSelectors.selectUserName(getState());
 
     if (!userName) {
-      throw new Error('No auth data! You need to sign in!');
+      throw new Error(UserError.noAuth);
     };
 
     const film = 
@@ -45,7 +43,7 @@ const toggleFavorite = createAppAsyncThunk('user/toggleFavorite',
       ?? userUtils.getFavoriteFilm(userName, filmId);
 
     if (!film) {
-      throw new Error('No film data');
+      throw new Error(UserError.noFilmData);
     };
 
     dispatch(filmsActions.addFilmToCache(film));
@@ -53,7 +51,7 @@ const toggleFavorite = createAppAsyncThunk('user/toggleFavorite',
     const data = userUtils.toggleFavoriteFilm(userName, film);
 
     if (!data) {
-      throw new Error('No user data');
+      throw new Error(UserError.addToFavorite);
     };
 
     return data.favorites;

@@ -16,26 +16,13 @@ const initialState: FilmsState = {
   loading: false
 };
 
-const { setLoadedDefaultFilms, loadFilmByQuery, addFilmToCache } = filmsActions;
-
-const cacheReducer = (data: Record<string, FilmCard>, item: FilmCard) => {
-  if (data[item.id]) {
-    return data;
-  };
-
-  data[item.id] = item;
-  return data;
-};
+const { loadDefaultFilms, loadFilmByQuery, addFilmToCache, deleteFilmsData } = filmsActions;
 
 export const filmsReducer = createReducer<FilmsState>(
   initialState,
   (builder) => {
 
-    builder.addCase(setLoadedDefaultFilms, (state, { payload }) => ({
-      data: payload,
-      cache: payload.reduce(cacheReducer, {...state.cache}),
-      loading: false
-    }));
+    builder.addCase(deleteFilmsData, () => initialState);
 
     builder.addCase(addFilmToCache, (state, { payload }) => state.cache[payload.id] ? state : ({
       ...state,
@@ -45,19 +32,42 @@ export const filmsReducer = createReducer<FilmsState>(
       }
     }));
 
+    builder.addCase(loadDefaultFilms.fulfilled, (state, { payload }) => ({
+      ...state,
+      data: payload,
+      loading: false,
+      error: undefined
+    }));
+
+    builder.addCase(loadDefaultFilms.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: undefined
+    }));
+
+    builder.addCase(loadDefaultFilms.rejected, (state, { payload }) => ({
+      ...state,
+      data: [],
+      loading: false,
+      error: payload as string
+    }));
+
     builder.addCase(loadFilmByQuery.fulfilled, (state, { payload }) => ({
       ...state,
       data: payload,
-      loading: false
+      loading: false,
+      error: undefined
     }));
 
     builder.addCase(loadFilmByQuery.pending, (state) => ({
       ...state,
-      loading: true
+      loading: true,
+      error: undefined
     }));
 
     builder.addCase(loadFilmByQuery.rejected, (state, { payload }) => ({
       ...state,
+      data: [],
       loading: false,
       error: payload as string
     }));

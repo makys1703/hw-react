@@ -1,16 +1,21 @@
 import { LoaderFunction } from 'react-router';
 import { filmDetailsApi } from '../../api/filmDetails';
 import { getDeferedStore } from '../../router/router.utils';
+import { filmsActions } from '../../store/films';
 import { mapFilmCardResponse, mapFilmDetailsResponse } from '../../utils/mapFilmResponse.utils';
 import { filmDetailsActions, filmDetailsUtils } from '../../store/filmDetails';
+import { FilmPageError } from './FilmPage.constants';
 import { IFilmDetails } from '../../types/filmDetails.interface';
-import { filmsActions } from '../../store/films';
 
 
 export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmDetails> => {
+  if (!params.id || Number.isNaN(Number(params.id))) {
+    throw new Error(FilmPageError.param);
+  }
+
   const store = await getDeferedStore();
 
-  const cachedFilmDetails = filmDetailsUtils.getFilmDetails(params.id as string);
+  const cachedFilmDetails = filmDetailsUtils.getFilmDetails(params.id);
 
   if (cachedFilmDetails) {
     store.dispatch(
@@ -19,16 +24,14 @@ export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmD
     return cachedFilmDetails;
   };
 
-  const {data, error} = await filmDetailsApi.getFilmDetailsById(params.id as string);
+  const {data, error} = await filmDetailsApi.getFilmDetailsById(params.id);
 
-  if (!data || error) {
-    throw new Error(error);
+  if (error || !data) {
+    throw new Error(FilmPageError.noData);
   }
 
   const filmDetails = mapFilmDetailsResponse(data);
   const filmCard = mapFilmCardResponse(data);
-
-  filmDetailsUtils.addFilmDetails(filmDetails);
 
   store.dispatch(
     filmDetailsActions.setLoadedFilmDetails(filmDetails)
@@ -38,6 +41,7 @@ export const FilmPageLoader: LoaderFunction = async ({ params }): Promise<IFilmD
     filmsActions.addFilmToCache(filmCard)
   );
 
+  filmDetailsUtils.addFilmDetails(filmDetails);
+
   return filmDetails;
-  
 };
