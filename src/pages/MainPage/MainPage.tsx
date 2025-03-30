@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../hooks/useAppSelector.hook';
 import { filmsSelectors } from '../../store/films';
+import { WithLoader } from '../../hoc/withLoader';
 import { PageHeading } from '../../modules/PageHeading';
 import { SearchForm } from './modules/SearchForm';
 import { FilmList } from '../../modules/FilmList';
@@ -13,7 +14,6 @@ export function MainPage() {
   const loading = useAppSelector(filmsSelectors.selectFilmsLoading);
   const error = useAppSelector(filmsSelectors.selectFilmsError);
 
-  const showFilms = !error && !loading && Boolean(data.length);
   const showNotFound = !error && !loading && data.length === 0;
   const showLoading = !error && loading;
 
@@ -26,10 +26,16 @@ export function MainPage() {
       </PageHeading>
       <SearchForm />
       <Wrapper style={{ paddingTop: 80, paddingBottom: 58 }}>
-        { showFilms && <FilmList films={data} />}
-        { showNotFound && <NotFound /> }
-        { showLoading && <Paragraph>Загрузка...</Paragraph> }
-        { error && <Paragraph>{ error }</Paragraph> }
+        <WithLoader 
+          isLoading={showLoading}
+          loadingElement={<Paragraph>Загрузка...</Paragraph>}
+          isError={Boolean(error)}
+          errorElement={<Paragraph>{ error }</Paragraph>}
+          isNoData={showNotFound}
+          noDataElement={<NotFound />}
+        >
+          <FilmList films={data} />
+        </WithLoader>
       </Wrapper>
     </>
   );
