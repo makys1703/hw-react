@@ -3,22 +3,20 @@ import { createBrowserRouter } from 'react-router';
 import { RequireAuth } from '../hoc/RequireAuth';
 import { MainLayout } from '../layouts/MainLayout';
 import { Fallback } from '../components/Fallback/Fallback';
-import { ErrorPage, FETCHING_DATA_ERROR, NOT_FOUND_ERROR } from '../pages/ErrorPage';
+import { MainPage } from '../pages/MainPage';
+import { LoginPage } from '../pages/LoginPage';
 import { MainPageLoader } from '../pages/MainPage/MainPage.loader';
 import { FilmPageLoader } from '../pages/FilmPage/FilmPage.loader';
+import { ErrorPage, PageError } from '../pages/ErrorPage';
 
 
-const LazyMainPage = lazy(() => import('../pages/MainPage/MainPage'));
 const LazyFavoritesPage = lazy(() => import('../pages/FavoritesPage/FavoritesPage'));
-const LazyLoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const LazyFilmPage = lazy(() => import('../pages/FilmPage/FilmPage'));
 
 const mainPageElement = (
-  <Suspense fallback={<Fallback />}>
-    <RequireAuth>
-      <LazyMainPage />
-    </RequireAuth>
-  </Suspense>
+  <RequireAuth>
+    <MainPage />
+  </RequireAuth>
 );
 
 const favoritesPageElement = (
@@ -26,12 +24,6 @@ const favoritesPageElement = (
     <RequireAuth>
       <LazyFavoritesPage />
     </RequireAuth>
-  </Suspense>
-);
-
-const loginPageElement = (
-  <Suspense fallback={<Fallback />}>
-    <LazyLoginPage />
   </Suspense>
 );
 
@@ -52,27 +44,27 @@ export const router = createBrowserRouter([
         path: '/',
         element: mainPageElement,
         loader: MainPageLoader,
-        errorElement: <ErrorPage text={FETCHING_DATA_ERROR} />
+        errorElement: <ErrorPage text={PageError.fetching} />
       },
       {
         path: '/favorites',
         element: favoritesPageElement,
-        errorElement: <ErrorPage text={FETCHING_DATA_ERROR} />
+        errorElement: <ErrorPage text={PageError.fetching} />
       },
       {
         path: '/login',
-        element: loginPageElement,
-        errorElement: <ErrorPage text={NOT_FOUND_ERROR} />
+        element: <LoginPage />,
+        errorElement: <ErrorPage text={PageError.pageNotFound} />
       },
       {
         path: '/movie/:id',
         element: filmPageElement,
         loader: FilmPageLoader,
-        errorElement: <ErrorPage text={FETCHING_DATA_ERROR} />
+        errorElement: <ErrorPage text={PageError.fetching} />
       },
       {
         path: '*',
-        element: <ErrorPage text={NOT_FOUND_ERROR} />
+        element: <ErrorPage text={PageError.pageNotFound} />
       }
     ]
   }

@@ -1,11 +1,13 @@
-import { UserContextProvider } from './context/User';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
+import { store } from './store/store';
 import { router } from './router';
+
 
 export function App() {
   return (
-    <UserContextProvider>
-      <RouterProvider router={router} />
-    </UserContextProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
   );
-}
+};

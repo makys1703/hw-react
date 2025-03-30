@@ -1,20 +1,20 @@
+import { useAppSelector } from '../../hooks/useAppSelector.hook';
+import { userSelectors } from '../../store/user';
 import { FilmList } from '../../modules/FilmList';
 import { PageHeading } from '../../modules/PageHeading';
 import { Wrapper } from '../../components/Wrapper';
-import { FilmCard } from '../../types/filmCard.interface';
 import { Paragraph } from '../../components/Paragraph';
 
 
-const films: FilmCard[] = [];
-
-
 export function FavoritesPage() {
+  const favoriteFilms = useAppSelector(userSelectors.selectFavorites);
+
   return (
     <>
       <PageHeading title='Избранное' />
       <Wrapper style={{ paddingTop: 40, paddingBottom: 58 }}>
-        { films.length 
-          ? <FilmList films={films}/>
+        { favoriteFilms && Boolean(favoriteFilms.length)
+          ? <FilmList films={favoriteFilms}/>
           : <Paragraph>Упс... Ничего не найдено</Paragraph>
         }
       </Wrapper>

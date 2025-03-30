@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Card } from './modules/Card';
-import { NotFound } from './components/NotFound';
+import { Paragraph } from '../../components/Paragraph';
 import { FilmCard } from '../../types/filmCard.interface';
 import styles from './FilmList.module.css';
 
@@ -20,18 +20,16 @@ export function FilmList({ films }: Props) {
     navigate(`/movie/${id}`);
   };
 
-  const showList = !loading && films.length > 0;
-  const showNotFound = !loading && films.length < 1;
-
   return (
     <>
-      { showList && (
+      { loading && <Paragraph>Загрузка...</Paragraph>}
+      { !loading && (
         <div className={styles.filmList}>
-          { films.map((props) => <Card {...props} openCard={openCard(props.id)} key={props.id} />) }
+          { films.map((props) => 
+            <Card {...props} openCard={openCard(props.id)} key={props.id} />)
+          }
         </div>
       )}
-      { showNotFound && <NotFound /> }
-      { loading && <p>Загрузка...</p> }
     </>
   );
 }

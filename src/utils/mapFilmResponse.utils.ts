@@ -5,11 +5,12 @@ import { FilmDetailsResponse } from '../types/filmDetailsResponse.interface';
 
 const UNDEFINED_TEXT = 'Информация отсутствует';
 
-export const mapFilmDetailsResponse = ({ short, top }: FilmDetailsResponse): IFilmDetails => {
+export const mapFilmDetailsResponse = ({ short, top, imdbId }: FilmDetailsResponse): IFilmDetails => {
 
   const duration = top?.runtime?.seconds ? Math.ceil(top.runtime.seconds / 60): 0;
 
   return {
+    id: imdbId.slice(2),
     title: short.name ?? UNDEFINED_TEXT,
     rating: short.aggregateRating.ratingValue ?? 0,
     image: short.image ?? '',

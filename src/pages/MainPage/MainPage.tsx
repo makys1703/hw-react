@@ -1,22 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useLoaderData } from 'react-router';
+import { useAppSelector } from '../../hooks/useAppSelector.hook';
+import { filmsSelectors } from '../../store/films';
+import { WithLoader } from '../../hoc/withLoader';
 import { PageHeading } from '../../modules/PageHeading';
 import { SearchForm } from './modules/SearchForm';
 import { FilmList } from '../../modules/FilmList';
+import { NotFound } from '../../modules/FilmList/components/NotFound';
 import { Paragraph } from '../../components/Paragraph';
 import { Wrapper } from '../../components/Wrapper';
-import { FilmCard } from '../../types/filmCard.interface';
 
 
 export function MainPage() {
-  const [films, setFilms] = useState<FilmCard[]>([]);
+  const data = useAppSelector(filmsSelectors.selectFilms);
+  const loading = useAppSelector(filmsSelectors.selectFilmsLoading);
+  const error = useAppSelector(filmsSelectors.selectFilmsError);
 
-  const data = useLoaderData() as FilmCard[];
-
-  useEffect(() => {
-    const initialFilms: FilmCard[] = data.length > 0 ? data : [];
-    setFilms(initialFilms);
-  }, [data]);
+  const showNotFound = !error && !loading && data.length === 0;
+  const showLoading = !error && loading;
 
   return (
     <>
@@ -25,9 +24,18 @@ export function MainPage() {
           Введите название фильма, сериала или мультфильма для поиска и добавления в избранное.
         </Paragraph>
       </PageHeading>
-      <SearchForm setFilms={setFilms}/>
+      <SearchForm />
       <Wrapper style={{ paddingTop: 80, paddingBottom: 58 }}>
-        <FilmList films={films} />
+        <WithLoader 
+          isLoading={showLoading}
+          loadingElement={<Paragraph>Загрузка...</Paragraph>}
+          isError={Boolean(error)}
+          errorElement={<Paragraph>{ error }</Paragraph>}
+          isNoData={showNotFound}
+          noDataElement={<NotFound />}
+        >
+          <FilmList films={data} />
+        </WithLoader>
       </Wrapper>
     </>
   );
